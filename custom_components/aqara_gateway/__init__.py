@@ -69,12 +69,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         entry.add_update_listener(async_update_options)
 
     # init setup for each supported domains
-    if (MAJOR_VERSION, MINOR_VERSION) >= (2022, 8):
-        await hass.config_entries.async_forward_entry_setups(entry, DOMAINS)
-    else:
-        for domain in DOMAINS:
-            hass.async_create_task(hass.config_entries.async_forward_entry_setup(
-                entry, domain))
+    await hass.config_entries.async_forward_entry_setups(entry, DOMAINS)
 
     gateway.start()
 
