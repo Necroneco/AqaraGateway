@@ -2,6 +2,7 @@
     "name": "Aqara Gateway",
     "render_readme": true,
     "domain": "aqara_gateway",
+    "homeassistant": "2022.11.0",
     "documentation": "https://github.com/niceboygithub/AqaraGateway",
     "issue_tracker": "https://github.com/niceboygithub/AqaraGateway/issues"
 }
