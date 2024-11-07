@@ -7,11 +7,8 @@ from homeassistant.const import (
     CONCENTRATION_PARTS_PER_MILLION,
     MAJOR_VERSION,
     MINOR_VERSION,
-    STATE_OPEN,
     STATE_OPENING,
     STATE_CLOSING,
-    STATE_LOCKED,
-    STATE_UNLOCKED,
     UnitOfEnergy,
     UnitOfPower,
     UnitOfPressure,
@@ -32,6 +29,16 @@ from homeassistant.components.climate.const import (
     HVACMode,
 )
 from homeassistant.components.sensor import SensorDeviceClass
+
+if (MAJOR_VERSION, MINOR_VERSION) >= (2024, 10):
+    from homeassistant.components.lock import LockState
+
+    STATE_OPEN = LockState.OPEN
+    STATE_LOCKED = LockState.LOCKED
+    STATE_UNLOCKED = LockState.UNLOCKED
+else:
+    from homeassistant.const import STATE_OPEN, STATE_LOCKED, STATE_UNLOCKED
+
 
 DOMAIN = "aqara_gateway"
 
