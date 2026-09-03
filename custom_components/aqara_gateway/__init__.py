@@ -9,7 +9,7 @@ from homeassistant.core import HomeAssistant, Event
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.system_info import async_get_system_info
-from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC, DeviceEntry
+from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC, DeviceEntry, async_get_device_id_by_identifier
 
 from .core.gateway import Gateway
 from .core.utils import AqaraGatewayDebug
@@ -274,7 +274,8 @@ class GatewayGenericDevice(Entity):
                 'model': device.get('device_model', ""),
                 'name': device.get('device_name', ""),
                 'sw_version': str(device.get('model_ver', "")),
-                'via_device': (DOMAIN, self.gateway.device['mac'])
+                # 'via_device': (DOMAIN, self.gateway.device['mac']),
+                'via_device_id': async_get_device_id_by_identifier(self.gateway.hass, (DOMAIN, self.gateway.device['mac']), config_entry_id=self.gateway._config_entry.entry_id),
             }
         # ble and mesh
         return {
@@ -283,7 +284,8 @@ class GatewayGenericDevice(Entity):
             'manufacturer': device.get('device_manufacturer'),
             'model': device['device_model'],
             'name': device['device_name'],
-            'via_device': (DOMAIN, self.gateway.device['mac'])
+            # 'via_device': (DOMAIN, self.gateway.device['mac']),
+            'via_device_id': async_get_device_id_by_identifier(self.gateway.hass, (DOMAIN, self.gateway.device['mac']), config_entry_id=self.gateway._config_entry.entry_id),
         }
 
     def update(self, data: dict):
